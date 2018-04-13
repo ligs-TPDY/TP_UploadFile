@@ -8,6 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger,FileType)  {
+    //图片
+    FileType_Img = 0,
+    //文件
+    FileType_File,
+    //音频
+    FileType_Music,
+};
+
+
 @interface UpFileNetwork : NSObject
 
 ///检查文件
@@ -22,8 +32,10 @@
                success:(void (^)(id response))success
                failure:(void (^)(NSError *error))failure;
 
-+ (void)downLoadFileWithParams:(NSMutableDictionary *)mutDic
-                        result:(void(^)(id responseObject))result
-                       failure:(void(^)(NSError *error))failure;
+
++ (void)downLoadFileWithFileType:(FileType)type
+                          Params:(NSMutableDictionary *)mutDic
+                          result:(void(^)(id responseObject))result
+                         failure:(void(^)(NSError *error))failure;
 
 @end

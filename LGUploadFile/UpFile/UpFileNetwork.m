@@ -78,42 +78,62 @@
 
 #pragma mark --下载文件--
 ///下载文件
-+ (void)downLoadFileWithParams:(NSMutableDictionary *)mutDic
++ (void)downLoadFileWithFileType:(FileType)type
+                          Params:(NSMutableDictionary *)mutDic
                           result:(void(^)(id responseObject))result
-                         failure:(void(^)(NSError *error))failure
+                         failure:(void(^)(NSError *error))failure;
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    NSURL *url = [NSURL URLWithString:@"http://ceph.huaxuntg.com/image/7a9e259af337efbbf15f17131c1d31bf.png"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
     /*
      第一个参数:请求对象
      第二个参数:progress 进度回调
      第三个参数:destination--(downloadTask-)
-     在该block中告诉AFN应该把文件存放在什么位置,AFN内部会自动的完成文件的剪切处理
-     targetPath:文件的临时存储路径(tmp)
-     response:响应头信息
-     返回值:文件的最终存储路径
+        在该block中告诉AFN应该把文件存放在什么位置,AFN内部会自动的完成文件的剪切处理
+        targetPath:文件的临时存储路径(tmp)
+        response:响应头信息
+        return 返回值:文件的最终存储路径
      第四个参数:completionHandler 完成之后的回调
      filePath:文件路径 == 返回值
      */
-    NSURL *url = [NSURL URLWithString:@"http://ceph.huaxuntg.com/image/7a9e259af337efbbf15f17131c1d31bf.png"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
     NSURLSessionDownloadTask *download = [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
         //进度回调,可在此监听下载进度(已经下载的大小/文件总大小)
         NSLog(@"%f",1.0 * downloadProgress.completedUnitCount / downloadProgress.totalUnitCount);
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-        
         NSString *fullPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory,
                                                                    NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:response.suggestedFilename];
         
-        NSLog(@"targetPath:%@",targetPath);
-        NSLog(@"fullPath:%@",fullPath);
-        
+        NSLog(@"文件临时缓存路径targetPath:%@",targetPath);
+        NSLog(@"文件最终存储路径fullPath:%@",fullPath);
         return [NSURL fileURLWithPath:fullPath];
-        
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath,NSError * _Nullable error) {
+        NSLog(@"response%@",response);
         NSLog(@"filePath:%@",filePath);
+        NSLog(@"error%@",error);
     }];
     
     [download resume];
-    
+}
+///根据类型获取对应的URL地址
++ (NSString *)getDownloadURl:(FileType)type
+{
+    NSString *URL = nil;
+    switch (type) {
+        case FileType_Img:
+            URL = [NSString stringWithFormat:@"%@%@",@"1",@"2"];
+            break;
+        case FileType_File:
+            URL = [NSString stringWithFormat:@"%@%@",@"1",@"2"];
+            break;
+        case FileType_Music:
+            URL = [NSString stringWithFormat:@"%@%@",@"1",@"2"];
+            break;
+        default:
+            break;
+    }
+    return URL;
 }
 @end

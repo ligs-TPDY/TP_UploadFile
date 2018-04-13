@@ -44,10 +44,10 @@
 //        NSLog(@"%@",error);
 //    }];
     
-    [UpFileNetwork downLoadFileWithParams:nil result:^(id responseObject) {
-        NSLog(@"123");
+    [UpFileNetwork downLoadFileWithFileType:FileType_Img Params:nil result:^(id responseObject) {
+        
     } failure:^(NSError *error) {
-        NSLog(@"456");
+        
     }];
     
 }
