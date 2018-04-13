@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "HAMURLSessionWrapperOperationManager.h"
+#import "UpFileNetwork.h"
 @interface ViewController ()
 
 @end
@@ -27,20 +28,26 @@
 //    }];
     
     
-    //需要上传的数据
-    NSMutableArray* images = [[NSMutableArray alloc]init];
-    for (int i=1; i<7; i++) {
-        UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg",i]];
-        NSData *data = UIImageJPEGRepresentation(img, 1.0);
-        [images addObject:data];
-    }
+//    //需要上传的数据
+//    NSMutableArray* images = [[NSMutableArray alloc]init];
+//    for (int i=1; i<7; i++) {
+//        UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg",i]];
+//        NSData *data = UIImageJPEGRepresentation(img, 1.0);
+//        [images addObject:data];
+//    }
+//
+//    [HAMURLSessionWrapperOperationManager uploadMoreFileNSOperationWithDataArr:images parameters:nil progress:^(NSInteger mark, NSProgress * progress) {
+//        NSLog(@"%ld%@",mark,progress.localizedDescription);
+//    } success:^(id responseObject) {
+//        NSLog(@"%@",responseObject);
+//    } failure:^(NSError *error) {
+//        NSLog(@"%@",error);
+//    }];
     
-    [HAMURLSessionWrapperOperationManager uploadMoreFileNSOperationWithDataArr:images parameters:nil progress:^(NSInteger mark, NSProgress * progress) {
-        NSLog(@"%ld%@",mark,progress.localizedDescription);
-    } success:^(id responseObject) {
-        NSLog(@"%@",responseObject);
+    [UpFileNetwork downLoadFileWithParams:nil result:^(id responseObject) {
+        NSLog(@"123");
     } failure:^(NSError *error) {
-        NSLog(@"%@",error);
+        NSLog(@"456");
     }];
     
 }

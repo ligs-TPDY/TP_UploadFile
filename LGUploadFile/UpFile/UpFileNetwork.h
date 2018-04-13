@@ -22,5 +22,8 @@
                success:(void (^)(id response))success
                failure:(void (^)(NSError *error))failure;
 
++ (void)downLoadFileWithParams:(NSMutableDictionary *)mutDic
+                        result:(void(^)(id responseObject))result
+                       failure:(void(^)(NSError *error))failure;
 
 @end
