@@ -85,7 +85,7 @@
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    NSURL *url = [NSURL URLWithString:@"http://ceph.huaxuntg.com/image/7a9e259af337efbbf15f17131c1d31bf.png"];
+    NSURL *url = [NSURL URLWithString:@"http://172.18.45.24:3001/profile/image/tgw/chat/image/25h58pic3eg.jpg"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     /*
      第一个参数:请求对象
@@ -105,7 +105,7 @@
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         NSString *fullPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory,
                                                                    NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:response.suggestedFilename];
-        
+        NSLog(@"%@",response);
         NSLog(@"文件临时缓存路径targetPath:%@",targetPath);
         NSLog(@"文件最终存储路径fullPath:%@",fullPath);
         return [NSURL fileURLWithPath:fullPath];
@@ -113,6 +113,16 @@
         NSLog(@"response%@",response);
         NSLog(@"filePath:%@",filePath);
         NSLog(@"error%@",error);
+        //如果报错了，就返回错误，此时filePath也会返回文件路径。但其实文件下载操作失败。
+        if (error != nil) {
+            failure(error);
+        }else{
+            //如果没有报错，同时文件路径存在，将文件路径返回。
+            if (filePath != nil) {
+                
+                result(filePath);
+            }
+        }
     }];
     
     [download resume];

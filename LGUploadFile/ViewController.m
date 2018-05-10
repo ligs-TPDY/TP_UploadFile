@@ -45,9 +45,9 @@
 //    }];
     
     [UpFileNetwork downLoadFileWithFileType:FileType_Img Params:nil result:^(id responseObject) {
-        
+        NSLog(@"%@",responseObject);
     } failure:^(NSError *error) {
-        
+        NSLog(@"%@",error);
     }];
     
 }

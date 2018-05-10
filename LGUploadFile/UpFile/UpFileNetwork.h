@@ -33,6 +33,14 @@ typedef NS_ENUM(NSInteger,FileType)  {
                failure:(void (^)(NSError *error))failure;
 
 
+/**
+ 下载文件，图片，音频
+
+ @param type 类型
+ @param mutDic 参数
+ @param result 结果
+ @param failure 失败
+ */
 + (void)downLoadFileWithFileType:(FileType)type
                           Params:(NSMutableDictionary *)mutDic
                           result:(void(^)(id responseObject))result
